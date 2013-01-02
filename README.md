@@ -23,13 +23,14 @@ Precompile hogan templates.
 Usage: hulkster [options] -- templates..
 
 Options:
-  -o, --output                   Output file                               [string]
-  -f, --format                   Output format ("json", "js")              [string]  [default: "js"]
-  -v, --export-var, --exportVar  Export variable used in JS output         [string]
-  -h, --hogan-var, --hoganVar    Hogan variable used in JS output          [string]
-  -a, --amd                      Export using AMD style (require.js)       [boolean]
-  -p, --hogan-path, --hoganPath  Path of hogan (only valid for amd style)  [string]
-  -m, --minify                   Minify output                             [string]
+  -o, --output                     Output file                               [string]
+  -f, --format                     Output format ("json", "js")              [string]  [default: "js"]
+  -v, --export-var, --exportVar    Export variable used in JS output         [string]
+  -h, --hogan-var, --hoganVar      Hogan variable used in JS output          [string]
+  -a, --amd                        Export using AMD style (require.js)       [boolean]
+  -p, --hogan-path, --hoganPath    Path of hogan (only valid for amd style)  [string]
+  -m, --minify                     Minify output                             [string]
+  -t, --minify-html, --minifyHtml  Minify HTML                               [string]
 ````
 
 ### Use wildcards
