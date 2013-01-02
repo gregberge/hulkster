@@ -1,14 +1,22 @@
 {
-	"name": "hulk",
-	"version": "0.1.0",
-	"author": "Bergé Greg <berge.greg@gmail.com>",
-	"description": "Command line utility to compile hogan.js template",
-	"keywords": [
-		"hogan",
-		"hulk"
-	],
-	"dependencies": {
-		"hogan.js": "*"
-	},
-	"license": "MIT"
+  "name": "hulkster",
+  "version": "0.1.0",
+  "author": "Bergé Greg <berge.greg@gmail.com>",
+  "description": "Command line utility to compile hogan.js template",
+  "keywords": [
+    "hogan",
+    "hulk"
+  ],
+  "dependencies": {
+    "hogan.js": "*",
+    "optimist": "*",
+    "lodash": "*",
+    "uglify-js": "~1.2",
+    "glob-whatev": "*"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  },
+  "license": "MIT"
 }
