@@ -38,6 +38,11 @@ argv = optimist.usage('Precompile hogan templates.\nUsage: $0 [options] -- templ
     type: 'string',
     description: 'Minify output',
     alias: 'minify'
+  },
+  't' : {
+    type: 'string',
+    description: 'Minify HTML',
+    alias: ['minify-html', 'minifyHtml']
   }
 }).argv;
 

@@ -3,7 +3,8 @@ glob = require('glob'),
 fs = require('fs'),
 _ = require('lodash'),
 path = require('path'),
-uglify = require('uglify-js');
+uglify = require('uglify-js'),
+htmlMinifier = require('html-minifier');
 
 // Remove utf-8 byte order mark, http://en.wikipedia.org/wiki/Byte_order_mark
 function removeByteOrderMark(text) {
@@ -13,9 +14,21 @@ function removeByteOrderMark(text) {
   return text;
 }
 
-var compileFile = function(file) {
+var compileFile = function(file, minifyHtml) {
   var rf = fs.readFileSync(file, 'utf-8');
   removeByteOrderMark(rf.trim());
+
+  if(minifyHtml) {
+    rf = htmlMinifier.minify(rf, {
+      removeComments: true,
+      collapseWhitespace: true,
+      collapseBooleanAttributes: true,
+      removeEmptyAttributes: true,
+      cleanAttributes: true,
+      removeScriptTypeAttributes: true
+    });
+  }
+
   return hogan.compile(rf, {asString: true});
 };
 
@@ -87,7 +100,7 @@ var compile = function(files, options) {
   matchedFiles.forEach(function(file){
     compiledObject = {};
     compiledObject.file = file;
-    compiledObject.template = compileFile(file);
+    compiledObject.template = compileFile(file, options.minifyHtml);
     compiledObjects.push(compiledObject);
   });
 

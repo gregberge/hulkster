@@ -19,7 +19,8 @@
     "optimist": "*",
     "lodash": "*",
     "uglify-js": "~1.2",
-    "glob": "*"
+    "glob": "*",
+    "html-minifier": "*"
   },
   "devDependencies": {
     "mocha": "*",
