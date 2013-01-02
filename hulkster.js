@@ -70,15 +70,13 @@ var jsPack = function(compiledObjects, options) {
 };
 
 var compile = function(files, options) {
-  if(typeof files === 'string') {
-    files = [files];
-  }
-
   options = options || {};
+  files = typeof files === 'string' ? [files] : files;
 
   var matchedFiles = [],
   compiledObjects = [],
-  compiledObject;
+  compiledObject,
+  output;
 
   files.forEach(function(file) {
     matchedFiles = matchedFiles.concat(expandFile(file));
@@ -93,13 +91,20 @@ var compile = function(files, options) {
     compiledObjects.push(compiledObject);
   });
 
-  if(typeof options.output === "string") {
-    if(options.output === "js") {
-      return jsPack(compiledObjects, options);
+  if(typeof options.format === "string") {
+    if(options.format === "js") {
+      output = jsPack(compiledObjects, options);
     }
-    else if (options.output === "json") {
-      return JSON.stringify(compiledObjects);
+    else if (options.format === "json") {
+      output = JSON.stringify(compiledObjects);
     }
+
+    if(typeof options.output === "string") {
+      fs.writeFileSync(options.output, output, 'utf-8');
+      return;
+    }
+
+    return output;
   }
 
   return compiledObjects;

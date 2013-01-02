@@ -1,7 +1,8 @@
-var should = require("should"),
-hulkster = require("../hulkster"),
-hogan = require("hogan.js"),
-Hogan = hogan;
+var should = require('should'),
+hulkster = require('../hulkster'),
+hogan = require('hogan.js'),
+Hogan = hogan,
+fs = require('fs');
 
 function validTemplates(files, compiledObjects) {
   var template, i, compiledTemplate, file;
@@ -63,28 +64,28 @@ describe('Hulkster', function() {
     });
   });
 
-  describe('#compile(.., {output: "json"})', function() {
+  describe('#compile(.., {format: "json"})', function() {
     it('should return an object with several compiled templates', function() {
       var file = __dirname + "/templates/hello-world.mustache",
-      compiledObjects = JSON.parse(hulkster.compile(file, {output: "json"}));
+      compiledObjects = JSON.parse(hulkster.compile(file, {format: "json"}));
 
       validTemplates([file], compiledObjects);
     });
   });
 
-  describe('#compile(.., {output: "js"})', function() {
+  describe('#compile(.., {format: "js"})', function() {
     it('should return a package of compiled templates', function() {
       var files = [__dirname + "/templates/*.mustache"],
-      package = hulkster.compile(files, {output: 'js'});
+      package = hulkster.compile(files, {format: 'js'});
 
       validHelloWorld(package);
     });
   });
 
-  describe('#compile(.., {output: "js", exportVar: "myCustomExport"})', function() {
+  describe('#compile(.., {format: "js", exportVar: "myCustomExport"})', function() {
     it('should return a package of compiled templates in myCustomExport variable', function() {
       var files = [__dirname + "/templates/hello-world.mustache"],
-      package = hulkster.compile(files, {output: 'js', exportVar: 'myCustomExport'});
+      package = hulkster.compile(files, {format: 'js', exportVar: 'myCustomExport'});
 
       eval(package);
       myCustomExport.should.have.property('hello-world');
@@ -92,30 +93,49 @@ describe('Hulkster', function() {
     });
   });
 
-  describe('#compile(.., {output: "js", hoganVar: "hogan"})', function() {
+  describe('#compile(.., {format: "js", hoganVar: "hogan"})', function() {
     it('should return a package of compiled templates with "hogan" as hogan variable', function() {
       var files = [__dirname + "/templates/hello-world.mustache"],
-      package = hulkster.compile(files, {output: 'js', hoganVar: 'hogan'});
+      package = hulkster.compile(files, {format: 'js', hoganVar: 'hogan'});
 
       validHelloWorld(package);
     });
   });
 
-  describe('#compile(.., {output: "js", amd: true})', function() {
+  describe('#compile(.., {format: "js", amd: true})', function() {
     it('should return a package of compiled templates in amd format', function() {
       var files = [__dirname + "/templates/hello-world.mustache"],
-      package = hulkster.compile(files, {output: 'js', amd: true});
+      package = hulkster.compile(files, {format: 'js', amd: true});
 
       package.should.match(/^define/);
     });
   });
 
-  describe('#compile(.., {output: "js", minify: true})', function() {
+  describe('#compile(.., {format: "js", minify: true})', function() {
     it('should return a package of compiled templates minified', function() {
       var files = [__dirname + "/templates/hello-world.mustache"],
-      package = hulkster.compile(files, {output: 'js', minify: true});
-      
+      package = hulkster.compile(files, {format: 'js', minify: true});
+
       validHelloWorld(package);
     });
   });
+
+  describe('#compile(.., {format:  "js", output: "test.js"})', function() {
+    it('should return a package of compiled templates minified', function() {
+      var files = [__dirname + "/templates/hello-world.mustache"],
+      output = 'test.js',
+      package;
+
+      hulkster.compile(files, {format: 'js', output: output});
+
+      package = fs.readFileSync(output, 'utf-8');
+
+      validHelloWorld(package);
+    });
+  });
+
+  after(function() {
+    fs.unlinkSync('test.js');
+  });
+
 });
