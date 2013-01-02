@@ -1,5 +1,5 @@
 var hogan = require('hogan.js'),
-globsync = require('glob-whatev'),
+glob = require('glob'),
 fs = require('fs'),
 _ = require('lodash'),
 path = require('path'),
@@ -20,7 +20,7 @@ var compileFile = function(file) {
 };
 
 var expandFile = function(file) {
-  return globsync.glob(file);
+  return glob.sync(file);
 };
 
 var getVariableFriendlyName = function(file) {

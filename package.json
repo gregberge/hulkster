@@ -12,7 +12,7 @@
     "optimist": "*",
     "lodash": "*",
     "uglify-js": "~1.2",
-    "glob-whatev": "*"
+    "glob": "*"
   },
   "devDependencies": {
     "mocha": "*",
