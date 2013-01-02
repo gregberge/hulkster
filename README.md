@@ -10,7 +10,9 @@ hulkster template.mustache
 
 ## Installing
 
-Installing hulkster would be very easy by npm, but it's not on npm as i am writting this line.
+````
+npm install hulkster
+````
 
 ## Usage
 
@@ -44,10 +46,10 @@ hulkster.compile('template.mustache', {
 
 ###hogan.compile(files, options)
 
-* `files` can be a `string` or an `array` of file.
-* `options` is an `object` that accepts options define in usage with camel syntax.
+* `files` can be a `string` or an `array` of files.
+* `options` is an `object` that accepts options defined in usage (with camel syntax).
 
-Like in command line, it's possible to use wildcards.
+Same as command line, it's possible to use wildcards.
 
 ## License
 
