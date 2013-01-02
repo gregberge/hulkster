@@ -1,12 +1,19 @@
 {
   "name": "hulkster",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "Bergé Greg <berge.greg@gmail.com>",
   "description": "Command line utility to compile hogan.js template",
   "keywords": [
     "hogan",
     "hulk"
   ],
+  "bin": {
+    "hulkster": "./bin/hulkster"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "main": "./hulkster",
   "dependencies": {
     "hogan.js": "*",
     "optimist": "*",
