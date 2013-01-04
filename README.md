@@ -47,12 +47,12 @@ hulkster.compile('template.mustache', {
 });
 ````
 
-###hogan.compile(files, options)
+###hulkster.compile(files, options)
 
 * `files` can be a `string` or an `array` of files.
 * `options` is an `object` that accepts options defined in usage (with camel syntax).
 
-Same as command line, it's possible to use wildcards.
+As in command line, it's possible to use wildcards.
 
 ## License
 
