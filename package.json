@@ -1,6 +1,6 @@
 {
   "name": "hulkster",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Bergé Greg <berge.greg@gmail.com>",
   "description": "Command line utility to compile hogan.js templates",
   "keywords": [
@@ -15,16 +15,16 @@
   },
   "main": "./hulkster",
   "dependencies": {
-    "hogan.js": "*",
-    "optimist": "*",
-    "lodash": "*",
+    "lodash": "~1.0.0-rc.3",
     "uglify-js": "~1.2",
-    "glob": "*",
-    "html-minifier": "*"
+    "glob": "~3.1.14",
+    "html-minifier": "~0.4.5",
+    "hogan.js": "~2.0.0",
+    "optimist": "~0.3.5"
   },
   "devDependencies": {
-    "mocha": "*",
-    "should": "*"
+    "mocha": "~1.7.4",
+    "should": "~1.2.1"
   },
   "license": "MIT"
 }
