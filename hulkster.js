@@ -19,14 +19,21 @@ var compileFile = function(file, minifyHtml) {
   removeByteOrderMark(rf.trim());
 
   if(minifyHtml) {
+    rf = rf.replace(/\{\{\s*#\s*([\w\.]+)\s*\}\}/, 'data-hulkster:open:$1="true"');
+    rf = rf.replace(/\{\{\s*\/\s*([\w\.]+)\s*\}\}/, 'data-hulkster:close:$1="true"');
+    rf = rf.replace(/\{\{\s*([\w\.]+)\s*\}\}/, 'data-hulkster:$1="true"');
+
     rf = htmlMinifier.minify(rf, {
-      removeComments: true,
       collapseWhitespace: true,
       collapseBooleanAttributes: true,
       removeEmptyAttributes: true,
       cleanAttributes: true,
       removeScriptTypeAttributes: true
     });
+
+    rf = rf.replace(/data-hulkster:open:([\w\.]+)="true"/, '{{#$1}}');
+    rf = rf.replace(/data-hulkster:close:([\w\.]+)="true"/, '{{/$1}}');
+    rf = rf.replace(/data-hulkster:([\w\.]+)="true"/, '{{$1}}');
   }
 
   return hogan.compile(rf, {asString: true});

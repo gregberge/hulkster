@@ -143,6 +143,17 @@ describe('Hulkster', function() {
     });
   });
 
+  describe('#compile() (conditional style)', function() {
+    it('should return a compiled template', function() {
+      var file = __dirname + "/templates/conditional-style.mustache",
+      package = hulkster.compile(file, {format: 'js', minifyHtml: true});
+
+      eval(package);
+
+      templates['conditional-style'].render({foo: 'bar'}).should.equal('<div  style="text-indent:30px"  ></div>');
+    });
+  });
+
   after(function() {
     fs.unlinkSync('test.js');
   });
