@@ -14,11 +14,11 @@ function removeByteOrderMark(text) {
   return text;
 }
 
-var compileFile = function(file, minifyHtml) {
+var compileFile = function (file, minifyHtml) {
   var rf = fs.readFileSync(file, 'utf-8');
   removeByteOrderMark(rf.trim());
 
-  if(minifyHtml) {
+  if (minifyHtml) {
     rf = rf.replace(/\{\{\s*#\s*([\w\.]+)\s*\}\}/, 'data-hulkster:open:$1="true"');
     rf = rf.replace(/\{\{\s*\/\s*([\w\.]+)\s*\}\}/, 'data-hulkster:close:$1="true"');
     rf = rf.replace(/\{\{\s*([\w\.]+)\s*\}\}/, 'data-hulkster:$1="true"');
@@ -32,23 +32,23 @@ var compileFile = function(file, minifyHtml) {
       removeScriptTypeAttributes: true
     });
 
-    rf = rf.replace(/data-hulkster:open:([\w\.]+)="true"/, '{{#$1}}');
-    rf = rf.replace(/data-hulkster:close:([\w\.]+)="true"/, '{{/$1}}');
-    rf = rf.replace(/data-hulkster:([\w\.]+)="true"/, '{{$1}}');
+    rf = rf.replace(/data-hulkster:open:([\w\.]+)="?true"?/, '{{#$1}}');
+    rf = rf.replace(/data-hulkster:close:([\w\.]+)="?true"?/, '{{/$1}}');
+    rf = rf.replace(/data-hulkster:([\w\.]+)="?true"?/, '{{$1}}');
   }
 
   return hogan.compile(rf, {asString: true});
 };
 
-var expandFile = function(file) {
+var expandFile = function (file) {
   return glob.sync(file);
 };
 
-var getVariableFriendlyName = function(file) {
+var getVariableFriendlyName = function (file) {
   return path.basename(file).replace(/\..*$/, '');
 };
 
-var jsPack = function(compiledObjects, options) {
+var jsPack = function (compiledObjects, options) {
 
   options = options || {};
 
@@ -62,24 +62,24 @@ var jsPack = function(compiledObjects, options) {
   amd = options.amd || false,
   minify = options.minify || false;
 
-  if(amd) {
+  if (amd) {
     packLines.push('define(["' + hoganPath + '"], function(' + hoganVar + ') {');
   }
 
   packLines.push('var ' + exportVar + '={};');
 
-  compiledObjects.forEach(function(compiledObject) {
+  compiledObjects.forEach(function (compiledObject) {
     name = getVariableFriendlyName(compiledObject.file);
     packLines.push(exportVar + '["' + name + '"] = new ' + hoganVar + '.Template(' + compiledObject.template + ');');
   });
 
-  if(amd) {
+  if (amd) {
     packLines.push('return ' + exportVar + ';\n});');
   }
 
   output = packLines.join('\n');
 
-  if(minify) {
+  if (minify) {
     ast = uglify.parser.parse(output);
     ast = uglify.uglify.ast_mangle(ast);
     ast = uglify.uglify.ast_squeeze(ast);
@@ -90,7 +90,7 @@ var jsPack = function(compiledObjects, options) {
   }
 };
 
-var compile = function(files, options) {
+var compile = function (files, options) {
   options = options || {};
   files = typeof files === 'string' ? [files] : files;
 
@@ -99,28 +99,28 @@ var compile = function(files, options) {
   compiledObject,
   output;
 
-  files.forEach(function(file) {
+  files.forEach(function (file) {
     matchedFiles = matchedFiles.concat(expandFile(file));
   });
 
   matchedFiles = _.uniq(matchedFiles);
 
-  matchedFiles.forEach(function(file){
+  matchedFiles.forEach(function (file) {
     compiledObject = {};
     compiledObject.file = file;
     compiledObject.template = compileFile(file, options.minifyHtml);
     compiledObjects.push(compiledObject);
   });
 
-  if(typeof options.format === "string") {
-    if(options.format === "js") {
+  if (typeof options.format === 'string') {
+    if (options.format === 'js') {
       output = jsPack(compiledObjects, options);
     }
-    else if (options.format === "json") {
+    else if (options.format === 'json') {
       output = JSON.stringify(compiledObjects);
     }
 
-    if(typeof options.output === "string") {
+    if (typeof options.output === 'string') {
       fs.writeFileSync(options.output, output, 'utf-8');
       return;
     }
