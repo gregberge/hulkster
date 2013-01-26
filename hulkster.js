@@ -24,6 +24,7 @@ var compileFile = function(file, minifyHtml) {
     rf = rf.replace(/\{\{\s*([\w\.]+)\s*\}\}/, 'data-hulkster:$1="true"');
 
     rf = htmlMinifier.minify(rf, {
+      removeComments: true,
       collapseWhitespace: true,
       collapseBooleanAttributes: true,
       removeEmptyAttributes: true,
