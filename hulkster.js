@@ -56,7 +56,7 @@ var jsPack = function (compiledObjects, options) {
   output,
   ast,
   packLines = [],
-  exportVar = options.exportVar || 'templates',
+  exportVar = options.exportVar || 'templates',
   hoganVar = options.hoganVar || 'Hogan',
   hoganPath = options.hoganPath || 'hogan',
   amd = options.amd || false,
