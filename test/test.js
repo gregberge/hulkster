@@ -152,7 +152,18 @@ describe('Hulkster', function () {
 
       eval(pack);
 
-      templates['conditional-style'].render({foo: 'bar'}).should.equal('<div  style="text-indent:30px"  ></div>');
+      templates['conditional-style'].render({foo: 'bar'}).should.match(/<div\s+style="text-indent:30px"\s+><\/div>/);
+    });
+  });
+
+  describe('#compile() (conditional class)', function () {
+    it('should return a compiled template', function () {
+      var file = __dirname + '/templates/conditional-class.mustache',
+      pack = hulkster.compile(file, {format: 'js', minifyHtml: true});
+
+      eval(pack);
+      
+      templates['conditional-class'].render({foo: 'bar'}).should.match(/<div\s+class="custom-class\s+test\s+"\s+><\/div>/);
     });
   });
 
