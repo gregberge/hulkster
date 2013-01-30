@@ -66,6 +66,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## Release Notes
 
+0.0.6:
+
+* Fixes a bug in HTML minification with mustache tag in attribute values.
+
 0.0.5:
 
 * Enable removeComments option in HTML minifier.
