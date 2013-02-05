@@ -23,6 +23,7 @@ Precompile hogan templates.
 Usage: hulkster [options] -- templates..
 
 Options:
+  --version                        Show version
   -o, --output                     Output file                               [string]
   -f, --format                     Output format ("json", "js")              [string]  [default: "js"]
   -v, --export-var, --exportVar    Export variable used in JS output         [string]
@@ -65,6 +66,10 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Release Notes
+
+0.0.7:
+
+* Add '--version' in options.
 
 0.0.6:
 
