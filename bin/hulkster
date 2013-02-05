@@ -1,50 +1,58 @@
 #!/usr/bin/env node
 
-var hulkster = require("../hulkster"),
+var hulkster = require('../hulkster'),
 optimist = require('optimist'),
 argv = optimist.usage('Precompile hogan templates.\nUsage: $0 [options] -- templates..', {
-  'o' : {
+  'version': {
+    description: 'Show version'
+  },
+  'o': {
     type: 'string',
     description: 'Output file',
     alias: 'output'
   },
-  'f' : {
+  'f': {
     type: 'string',
     description: 'Output format ("json", "js")',
     alias: 'format',
     default: 'js'
   },
-  'v' : {
+  'v': {
     type: 'string',
     description: 'Export variable used in JS output',
     alias: ['export-var', 'exportVar']
   },
-  'h' : {
+  'h': {
     type: 'string',
     description: 'Hogan variable used in JS output',
     alias: ['hogan-var', 'hoganVar']
   },
-  'a' : {
+  'a': {
     type: 'boolean',
     description: 'Export using AMD style (require.js)',
     alias: 'amd'
   },
-  'p' : {
+  'p': {
     type: 'string',
     description: 'Path of hogan (only valid for amd style)',
     alias: ['hogan-path', 'hoganPath']
   },
-  'm' : {
+  'm': {
     type: 'string',
     description: 'Minify output',
     alias: 'minify'
   },
-  't' : {
+  't': {
     type: 'string',
     description: 'Minify HTML',
     alias: ['minify-html', 'minifyHtml']
   }
 }).argv;
+
+if(argv.version) {
+  console.log(require('../package.json').version);
+  process.exit(-1);
+}
 
 if(!argv._.length) {
   optimist.showHelp();
@@ -53,6 +61,6 @@ if(!argv._.length) {
 
 var result = hulkster.compile(argv._, argv);
 
-if(typeof argv.o === "undefined") {
+if(typeof argv.o === 'undefined') {
   console.log(result);
 }
