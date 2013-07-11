@@ -1,4 +1,4 @@
-/*jshint evil:true expr:true undef:false unused:false */
+/*jshint evil:true, expr:true, undef:false, unused:false */
 var should = require('should'),
 hulkster = require('../hulkster'),
 hogan = require('hogan.js'),
@@ -110,6 +110,15 @@ describe('Hulkster', function () {
       pack = hulkster.compile(files, {format: 'js', amd: true});
 
       pack.should.match(/^define/);
+    });
+  });
+
+  describe('#compile(.., {format: "js", amd: true, amdName: "module"})', function () {
+    it('should return a package of compiled templates in a named amd module', function () {
+      var files = [__dirname + '/templates/x-hello-world.mustache'],
+      pack = hulkster.compile(files, {format: 'js', amd: true, amdName: 'module'});
+
+      pack.should.match(/^define\('module',/);
     });
   });
 
