@@ -7,6 +7,10 @@
     "hogan",
     "hulk"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/neoziro/hulkster.git"
+  },
   "bin": {
     "hulkster": "./bin/hulkster"
   },
