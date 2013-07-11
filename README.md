@@ -27,6 +27,7 @@ Options:
   -v, --export-var, --exportVar    Export variable used in JS output         [string]
   -h, --hogan-var, --hoganVar      Hogan variable used in JS output          [string]
   -a, --amd                        Export using AMD style (require.js)       [boolean]
+  -n, --amd-name, --amdName        AMD module name used in define wrapper    [string]
   -p, --hogan-path, --hoganPath    Path of hogan (only valid for amd style)  [string]
   -m, --minify                     Minify output                             [string]
   -t, --minify-html, --minifyHtml  Minify HTML                               [string]
