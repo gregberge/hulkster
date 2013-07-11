@@ -67,8 +67,8 @@ var jsPack = function (compiledObjects, options) {
   minify = options.minify || false;
 
   if (amd) {
-    var define = 'define(' + (amdName ? "'" + amdName + "', " : '');
-    packLines.push(define + '["' + hoganPath + '"], function(' + hoganVar + ') {');
+    var define = 'define(' + (amdName ? '\'' + amdName + '\', ' : '');
+    packLines.push(define + '[\'' + hoganPath + '\'], function(' + hoganVar + ') {');
   }
 
   packLines.push('var ' + exportVar + '={};');
