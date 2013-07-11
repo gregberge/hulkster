@@ -32,6 +32,11 @@ argv = optimist.usage('Precompile hogan templates.\nUsage: $0 [options] -- templ
     description: 'Export using AMD style (require.js)',
     alias: 'amd'
   },
+  'n': {
+    type: 'string',
+    description: 'AMD module name used in define wrapper',
+    alias: ['amd-name', 'amdName']
+  },
   'p': {
     type: 'string',
     description: 'Path of hogan (only valid for amd style)',

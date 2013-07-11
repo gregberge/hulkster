@@ -63,10 +63,12 @@ var jsPack = function (compiledObjects, options) {
   hoganVar = options.hoganVar || 'Hogan',
   hoganPath = options.hoganPath || 'hogan',
   amd = options.amd || false,
+  amdName = options.amdName,
   minify = options.minify || false;
 
   if (amd) {
-    packLines.push('define(["' + hoganPath + '"], function(' + hoganVar + ') {');
+    var define = 'define(' + (amdName ? "'" + amdName + "', " : '');
+    packLines.push(define + '["' + hoganPath + '"], function(' + hoganVar + ') {');
   }
 
   packLines.push('var ' + exportVar + '={};');
