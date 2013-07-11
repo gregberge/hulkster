@@ -84,6 +84,6 @@ MIT
 
 * Add HTML minification option.
 
-0.0.1: 
- 
+0.0.1:
+
 * First version of hulkster, it do the job ! And there is some tests :)
