@@ -57,33 +57,3 @@ As in command line, it's possible to use wildcards.
 ## License
 
 MIT
-
-## Release Notes
-
-0.0.7:
-
-* Add '--version' in options.
-
-0.0.6:
-
-* Fixes a bug in HTML minification with mustache tag in attribute values.
-
-0.0.5:
-
-* Enable removeComments option in HTML minifier.
-
-0.0.4:
-
-* Fixes a bug in HTML minification (Issue #1).
-
-0.0.3:
-
-* Update package.json to use tilde version range instead of unsecure '*'.
-
-0.0.2:
-
-* Add HTML minification option.
-
-0.0.1:
-
-* First version of hulkster, it do the job ! And there is some tests :)
