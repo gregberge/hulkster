@@ -1,6 +1,6 @@
 {
   "name": "hulkster",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "author": "Bergé Greg <berge.greg@gmail.com>",
   "description": "Command line utility to compile hogan.js templates",
   "keywords": [
