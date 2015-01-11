@@ -1,4 +1,7 @@
-# Hulkster [![Build Status](https://travis-ci.org/neoziro/hulkster.png?branch=master)](https://travis-ci.org/neoziro/hulkster)
+# hulkster
+[![Build Status](https://travis-ci.org/neoziro/hulkster.svg?branch=master)](https://travis-ci.org/neoziro/hulkster)
+[![Dependency Status](https://david-dm.org/neoziro/hulkster.svg?theme=shields.io)](https://david-dm.org/neoziro/hulkster)
+[![devDependency Status](https://david-dm.org/neoziro/hulkster/dev-status.svg?theme=shields.io)](https://david-dm.org/neoziro/hulkster#info=devDependencies)
 
 Hulkster is a tool (command line + node) to compile [hogan.js](http://twitter.github.com/hogan.js/) templates. Hogan.js has a similar tool named "hulk", but it is too simple to meet the majority of use cases. So hulkster is a kind of super "hulk".
 

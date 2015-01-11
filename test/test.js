@@ -1,10 +1,10 @@
-/*jshint evil:true, expr:true, undef:false, unused:false */
-var should = require('should'),
-hulkster = require('../hulkster'),
-hogan = require('hogan.js'),
-Hogan = hogan,
-fs = require('fs'),
-templates;
+var expect = require('chai').expect;
+var fs = require('fs');
+var path = require('path');
+var hulkster = require('../hulkster');
+var hogan = require('hogan.js');
+var Hogan = hogan;
+var templates;
 
 function validTemplates(files, compiledObjects) {
   var template, i, compiledTemplate, file;
@@ -13,63 +13,66 @@ function validTemplates(files, compiledObjects) {
     compiledTemplate = compiledObjects[i];
     file = files[i];
 
-    compiledTemplate.should.have.property('file');
-    compiledTemplate.file.should.equal(file);
-
-    compiledTemplate.should.have.property('template');
+    expect(compiledTemplate).to.have.property('file');
+    expect(compiledTemplate.file).to.equal(file);
+    expect(compiledTemplate).to.have.property('template');
     eval('template=new hogan.Template(' + compiledTemplate.template + ')');
-    template.render().should.be.a('string');
+    expect(template.render()).to.be.a('string');
   }
 }
 
 function validHelloWorld(pack) {
   eval(pack);
-  templates.should.have.property('x-hello-world');
-  templates['x-hello-world'].render({world: 'World'}).should.equal('Hello World!');
+  expect(templates).to.have.property('x-hello-world');
+  expect(templates['x-hello-world'].render({world: 'World'})).to.equal('Hello World!');
 }
 
 describe('Hulkster', function () {
 
   describe('#compile() (single file)', function () {
     it('should return an object with a compiled template', function () {
-      var file = __dirname + '/templates/x-hello-world.mustache',
-      compiledObjects = hulkster.compile(file);
-
-      validTemplates([file], compiledObjects);
+      var file = path.join(__dirname, 'templates/x-hello-world.mustache');
+      validTemplates([file], hulkster.compile(file));
     });
   });
 
   describe('#compile() (several files)', function () {
     it('should return an object with several compiled templates', function () {
-      var files = [__dirname + '/templates/x-hello-world.mustache', __dirname + '/templates/x-smart-section.mustache'],
-      compiledObjects = hulkster.compile(files);
-
-      validTemplates(files, compiledObjects);
+      var files = [
+        path.join(__dirname, 'templates/x-hello-world.mustache'),
+        path.join(__dirname, 'templates/x-smart-section.mustache')
+      ];
+      validTemplates(files, hulkster.compile(files));
     });
   });
 
   describe('#compile() (unique values)', function () {
     it('should return an object with several compiled templates', function () {
-      var files = [__dirname + '/templates/x-smart-section.mustache', __dirname + '/templates/x-smart-section.mustache'],
-      compiledObjects = hulkster.compile(files);
-
-      compiledObjects.length.should.equal(1);
+      var files = [
+        path.join(__dirname, 'templates/x-smart-section.mustache'),
+        path.join(__dirname, 'templates/x-smart-section.mustache')
+      ];
+      var compiledObjects = hulkster.compile(files);
+      expect(compiledObjects).to.length(1);
     });
   });
 
   describe('#compile() (wildcard)', function () {
     it('should return an object with several compiled templates', function () {
-      var files = [__dirname + '/templates/x-*.mustache'],
-      compiledObjects = hulkster.compile(files);
+      var files = [path.join(__dirname, 'templates/x-*.mustache')];
+      var compiledObjects = hulkster.compile(files);
 
-      validTemplates([__dirname + '/templates/x-hello-world.mustache', __dirname + '/templates/x-smart-section.mustache'], compiledObjects);
+      validTemplates([
+        path.join(__dirname, 'templates/x-hello-world.mustache'),
+        path.join(__dirname, 'templates/x-smart-section.mustache')
+      ], compiledObjects);
     });
   });
 
   describe('#compile(.., {format: "json"})', function () {
     it('should return an object with several compiled templates', function () {
-      var file = __dirname + '/templates/x-hello-world.mustache',
-      compiledObjects = JSON.parse(hulkster.compile(file, {format: 'json'}));
+      var file = path.join(__dirname, 'templates/x-hello-world.mustache');
+      var compiledObjects = JSON.parse(hulkster.compile(file, {format: 'json'}));
 
       validTemplates([file], compiledObjects);
     });
@@ -77,8 +80,8 @@ describe('Hulkster', function () {
 
   describe('#compile(.., {format: "js"})', function () {
     it('should return a package of compiled templates', function () {
-      var files = [__dirname + '/templates/x-*.mustache'],
-      pack = hulkster.compile(files, {format: 'js'});
+      var files = [path.join(__dirname, 'templates/x-*.mustache')];
+      var pack = hulkster.compile(files, {format: 'js'});
 
       validHelloWorld(pack);
     });
@@ -86,19 +89,19 @@ describe('Hulkster', function () {
 
   describe('#compile(.., {format: "js", exportVar: "myCustomExport"})', function () {
     it('should return a package of compiled templates in myCustomExport variable', function () {
-      var files = [__dirname + '/templates/x-hello-world.mustache'],
-      pack = hulkster.compile(files, {format: 'js', exportVar: 'myCustomExport'});
+      var files = [path.join(__dirname, 'templates/x-hello-world.mustache')];
+      var pack = hulkster.compile(files, {format: 'js', exportVar: 'myCustomExport'});
 
       eval(pack);
-      myCustomExport.should.have.property('x-hello-world');
-      myCustomExport['x-hello-world'].render({world: 'World'}).should.equal('Hello World!');
+      expect(myCustomExport).to.have.property('x-hello-world');
+      expect(myCustomExport['x-hello-world'].render({world: 'World'})).to.equal('Hello World!');
     });
   });
 
   describe('#compile(.., {format: "js", hoganVar: "hogan"})', function () {
     it('should return a package of compiled templates with "hogan" as hogan variable', function () {
-      var files = [__dirname + '/templates/x-hello-world.mustache'],
-      pack = hulkster.compile(files, {format: 'js', hoganVar: 'hogan'});
+      var files = [path.join(__dirname, 'templates/x-hello-world.mustache')];
+      var pack = hulkster.compile(files, {format: 'js', hoganVar: 'hogan'});
 
       validHelloWorld(pack);
     });
@@ -106,26 +109,26 @@ describe('Hulkster', function () {
 
   describe('#compile(.., {format: "js", amd: true})', function () {
     it('should return a package of compiled templates in amd format', function () {
-      var files = [__dirname + '/templates/x-hello-world.mustache'],
-      pack = hulkster.compile(files, {format: 'js', amd: true});
+      var files = [path.join(__dirname, '/templates/x-hello-world.mustache')];
+      var pack = hulkster.compile(files, {format: 'js', amd: true});
 
-      pack.should.match(/^define/);
+      expect(pack).to.match(/^define/);
     });
   });
 
   describe('#compile(.., {format: "js", amd: true, amdName: "module"})', function () {
     it('should return a package of compiled templates in a named amd module', function () {
-      var files = [__dirname + '/templates/x-hello-world.mustache'],
-      pack = hulkster.compile(files, {format: 'js', amd: true, amdName: 'module'});
+      var files = [path.join(__dirname, '/templates/x-hello-world.mustache')];
+      var pack = hulkster.compile(files, {format: 'js', amd: true, amdName: 'module'});
 
-      pack.should.match(/^define\('module',/);
+      expect(pack).to.match(/^define\('module',/);
     });
   });
 
   describe('#compile(.., {format: "js", minify: true})', function () {
     it('should return a package of compiled templates minified', function () {
-      var files = [__dirname + '/templates/x-hello-world.mustache'],
-      pack = hulkster.compile(files, {format: 'js', minify: true});
+      var files = [path.join(__dirname, 'templates/x-hello-world.mustache')];
+      var pack = hulkster.compile(files, {format: 'js', minify: true});
 
       validHelloWorld(pack);
     });
@@ -133,51 +136,43 @@ describe('Hulkster', function () {
 
   describe('#compile(.., {format:  "js", output: "test.js"})', function () {
     it('should write package in a file', function () {
-      var files = [__dirname + '/templates/x-hello-world.mustache'],
-      output = 'test.js',
-      pack;
+      var files = [path.join(__dirname, 'templates/x-hello-world.mustache')];
+      var output = path.join(__dirname, 'output.testjs');
 
       hulkster.compile(files, {format: 'js', output: output});
 
-      pack = fs.readFileSync(output, 'utf-8');
-
-      validHelloWorld(pack);
+      validHelloWorld(fs.readFileSync(output, 'utf-8'));
     });
   });
 
   describe('#compile(.., {format: "js", minifyHtml: true})', function () {
     it('should return an object with minified html template', function () {
-      var file = __dirname + '/templates/html.mustache',
-      pack = hulkster.compile(file, {format: 'js', minifyHtml: true});
+      var file = path.join(__dirname, 'templates/html.mustache');
+      var pack = hulkster.compile(file, {format: 'js', minifyHtml: true});
       eval(pack);
-      templates.html.render().should.equal('<p>some ugly html</p><p>the end</p>');
+      expect(templates.html.render()).to.equal('<p>some ugly html</p><p>the end</p>');
     });
   });
 
   describe('#compile() (conditional style)', function () {
     it('should return a compiled template', function () {
-      var file = __dirname + '/templates/conditional-style.mustache',
-      pack = hulkster.compile(file, {format: 'js', minifyHtml: true});
+      var file = path.join(__dirname, '/templates/conditional-style.mustache');
+      var pack = hulkster.compile(file, {format: 'js', minifyHtml: true});
 
       eval(pack);
 
-      templates['conditional-style'].render({foo: 'bar'}).should.match(/<div\s+style="text-indent:30px"\s+><\/div>/);
+      expect(templates['conditional-style'].render({foo: 'bar'})).to.match(/<div\s+style="text-indent:30px"\s+><\/div>/);
     });
   });
 
   describe('#compile() (conditional class)', function () {
     it('should return a compiled template', function () {
-      var file = __dirname + '/templates/conditional-class.mustache',
-      pack = hulkster.compile(file, {format: 'js', minifyHtml: true});
+      var file = path.join(__dirname, 'templates/conditional-class.mustache');
+      var pack = hulkster.compile(file, {format: 'js', minifyHtml: true});
 
       eval(pack);
-      
-      templates['conditional-class'].render({foo: 'bar'}).should.match(/<div\s+class="custom-class\s+test\s+"\s+><\/div>/);
+
+      expect(templates['conditional-class'].render({foo: 'bar'})).to.match(/<div\s+class="custom-class\s+test\s+"\s+><\/div>/);
     });
   });
-
-  after(function () {
-    fs.unlinkSync('test.js');
-  });
-
 });
